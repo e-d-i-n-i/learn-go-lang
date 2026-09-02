@@ -1,3 +1,3 @@
-module hello-go
+module main
 
-go 1.21
+go 1.26.1
