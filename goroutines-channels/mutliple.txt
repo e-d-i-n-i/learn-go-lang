@@ -1,0 +1,37 @@
+package main
+
+import (
+	"fmt"
+	"time"
+)
+
+func main() {
+	// Create two separate channels
+	channel1 := make(chan string)
+	channel2 := make(chan string)
+
+	// First goroutine
+	go func() {
+		fmt.Println("Goroutine 1 started, doing work...")
+		time.Sleep(1 * time.Second) // Simulate work
+		channel1 <- "Result from goroutine 1"
+		fmt.Println("Goroutine 1 sent to channel1")
+	}()
+
+	// Second goroutine
+	go func() {
+		fmt.Println("Goroutine 2 started, doing work...")
+		time.Sleep(2 * time.Second) // Simulate different work
+		channel2 <- "Result from goroutine 2"
+		fmt.Println("Goroutine 2 sent to channel2")
+	}()
+
+	// Receive messages from both channels
+	msg1 := <-channel1
+	fmt.Println("Main received:", msg1)
+
+	msg2 := <-channel2
+	fmt.Println("Main received:", msg2)
+
+	fmt.Println("Main function finished.")
+}
